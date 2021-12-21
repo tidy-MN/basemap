@@ -4,7 +4,7 @@
 \alias{add_basemaps}
 \title{Easy add basemaps to leaflet that the user can switch On/Off}
 \usage{
-add_basemaps(type = "light", controls = TRUE)
+add_basemaps(map, type = "light", controls = TRUE)
 }
 \arguments{
 \item{type}{"light" or "dark"}

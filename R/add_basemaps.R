@@ -16,20 +16,24 @@
 #'
 #' @export
 
-add_basemaps <- function(type = "light", 
-                          controls = TRUE) {
+add_basemaps <- function(map,
+                         type = "light", 
+                         controls = TRUE) {
     
-  
-    if (controls) {
-      addTiles(group = "Open Streets") %>%
-        addProviderTiles(providers$Stamen.Toner, group = "Toner") %>%
-        addProviderTiles(providers$Stamen.TonerLite, group = "Gray") %>% 
-        addProviderTiles(providers$CartoDB.Positron, group = "Positron") %>%
-      addLayersControl(
-        baseGroups = c("Open Streets", "Toner", "Gray", "Positron"),
-        options = layersControlOptions(collapsed = FALSE)
-      )
+  if (controls) {
+    
+    map %>%
+      leaflet::addTiles(group = "Open Streets") %>%
+        leaflet::addProviderTiles(leaflet::providers$Stamen.Toner, group = "Toner") %>%
+        leaflet::addProviderTiles(leaflet::providers$Stamen.TonerLite, group = "Gray") %>% 
+        leaflet::addProviderTiles(leaflet::providers$CartoDB.Positron, group = "Positron") %>%
+        leaflet::addLayersControl(
+            baseGroups = c("Open Streets", "Toner", "Gray", "Positron"),
+            options = leaflet::layersControlOptions(collapsed = FALSE))
+    
     } else {
+      
+      map %>%
       leaflet::addProviderTiles(leaflet::providers$CartoDB.PositronNoLabels,
                                 options = leaflet::providerTileOptions(opacity = 0.95)) %>%
         leaflet::addProviderTiles(leaflet::providers$CartoDB.Voyager,
@@ -39,6 +43,7 @@ add_basemaps <- function(type = "light",
     }
   
 }
+
 
 
 
