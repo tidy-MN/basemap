@@ -32,53 +32,19 @@ library(leaflet)
 library(readr)
 library(dplyr)
 
-locations <- read.csv('https://raw.githubusercontent.com/dKvale/aqi-watch/master/data-raw/locations.csv', stringsAsFactors = F,  check.names=F, colClasses = 'character')
+locations <- read.csv('https://raw.githubusercontent.com/dKvale/aqi-watch/master/data-raw/locations.csv', stringsAsFactors = F, check.names=F, colClasses = 'character')
 
-locations <- locations %>%
-  bind_rows(data.frame(AqsID = c("840380250004",
-                                 "840460990009",
-                                 "840550250047",
-                                 "840550790068",
-                                 "840551270006",
-                                 "840460130004"
-
-  ),
-  "Site Name" = c("Lake Ilo",
-                  "SF-USD",
-                  "Madison University Ave",
-                  "Milwaukee-UWM UPark",
-                  "Elkhorn",
-                  "Aberdeen"
-
-  ),
-  Lat   = c("47.34259",
-            "43.59901",
-            "43.07378",
-            "43.09455",
-            "42.66218",
-            "45.4686"
-  ),
-  Long  = c("-102.646",
-            " -96.78331",
-            "-89.43595",
-            " -87.90145",
-            "-88.48703",
-            "-98.49406"
-  ),
-  stringsAsFactors = F,
-  check.names = F))
-
-data <- read_csv("aqi_current.csv")
+air_data <- read.csv("data/aqi_current.csv", stringsAsFactors = F, check.names = F)
 
 legend_colors <- c('#00e400', '#ffff00', '#ff7e00', '#ff0000', '#99004c', '#7e0023')
 
 breaks <- c(0, 50, 100, 150, 200, 300, 700)
 
-data$aqi_color <- cut(data$AQI_Value,
-                      breaks = breaks,
-                      labels = legend_colors,
-                      include.lowest = T)
-data <- mutate(data,
+air_data$aqi_color <- cut(air_data$AQI_Value,
+                          breaks = breaks,
+                          labels = legend_colors,
+                          include.lowest = T)
+air_data <- mutate(air_data,
                Popup = paste0("<b style='font-size: 150%;'>",
                               `Site Name`, "</b></br>",
                               #"</br> AQS-ID: ", AqsID,
@@ -88,17 +54,17 @@ data <- mutate(data,
                               "</br> Sampling Hour: ", Time,
                               "</br> Date: ", Date))
 
-data <- left_join(data, locations[ , -2]) %>% arrange(AQI_Value)
+air_data <- left_join(air_data, locations[ , -2]) %>% arrange(AQI_Value)
 
-data <- group_by(data, AqsID) %>%
-        mutate(circle_scale = round(min(max(AQI_Value ** 0.5, 4.5), 12, na.rm = T), 1))
+air_data <- group_by(air_data, AqsID) %>%
+            mutate(circle_size = round(min(max(AQI_Value ** 0.5, 4.5), 12, na.rm = T), 1))
 
-data$Long <- as.numeric(data$Long)
-data$Lat  <- as.numeric(data$Lat)
+air_data$Long <- as.numeric(air_data$Long)
+air_data$Lat  <- as.numeric(air_data$Lat)
 
 
 # Radio button pollutants
-leaflet(na.omit(data[, c("aqi_color", "Popup", "Lat", "Long", "circle_scale")]), width = "100%", height = "2000") %>%
+leaflet(na.omit(air_data[, c("aqi_color", "Popup", "Lat", "Long", "circle_size")]), width = "100%", height = "2000") %>%
   setView(lat = 36, lng = -95.2, zoom = 6) %>%
   addProviderTiles(providers$CartoDB.PositronNoLabels,
                    options = providerTileOptions(opacity = 0.95)) %>%
@@ -106,20 +72,22 @@ leaflet(na.omit(data[, c("aqi_color", "Popup", "Lat", "Long", "circle_scale")]),
                    options = providerTileOptions(opacity = 0.7)) %>%
   addProviderTiles(providers$CartoDB.PositronOnlyLabels,
                    options = providerTileOptions(opacity = 0.8)) %>%
-  addCircleMarkers(data = na.omit(filter(data, Parameter == "PM25")[, c("aqi_color", "Popup", "Lat", "Long", "circle_scale")]),
-                   lng = ~Long, lat = ~Lat,
+  addCircleMarkers(data = na.omit(filter(air_data, Parameter == "PM25")),
+                   lng = ~Long, 
+                   lat = ~Lat,
                    popup     = ~Popup,
-                   radius    = ~circle_scale,
+                   radius    = ~circle_size,
                    fillColor = ~aqi_color,
                    color     = 'gray',
                    weight    = 2,
                    fillOpacity = 0.65,
                    opacity   = 0.5,
                    group = "PM2.5") %>%
-  addCircleMarkers(data = na.omit(filter(data, Parameter == "OZONE")[, c("aqi_color", "Popup", "Lat", "Long", "circle_scale")]),
-                   lng = ~Long, lat = ~Lat,
+  addCircleMarkers(data = na.omit(filter(air_data, Parameter == "OZONE")),
+                   lng = ~Long, 
+                   lat = ~Lat,
                    popup     = ~Popup,
-                   radius    = ~circle_scale,
+                   radius    = ~circle_size,
                    fillColor = ~aqi_color,
                    color     = 'gray',
                    weight    = 2,

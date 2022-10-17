@@ -25,16 +25,33 @@ library(leaflet)
 library(basemap)
 ```
 
-Use `add_basemaps()` in your leaflet pipe chain.
+<br>
 
-## Default basemaps w/ controls
+Now you can use `%>% add_basemaps()` in your leaflet pipeline.
+
+## Light-themed basemap
 ``` r
-leaflet() %>% add_basemaps()
+leaflet(df) %>% add_basemap()
 ```
 
-## Leaflet w/o controls
+![](light_map.png)
 
+<br>
+
+## Dark-themed basemap
 ``` r
-leaflet() %>% add_basemaps(controls = FALSE)
+leaflet(df) %>% add_basemap(dark = TRUE)
 ```
 
+![](dark_map.png)
+
+<br>
+
+## Add multiple basemaps with layer controls
+``` r
+leaflet(df) %>% add_basemaps(layers = TRUE)
+```
+
+![](layers_map.png)
+
+<br>
