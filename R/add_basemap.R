@@ -1,8 +1,8 @@
-#' Add basemaps to leaflet maps that the user can switch On/Off
+#' Add basemaps to leaflet maps with light or dark theme
 #'
-#' @param dark TRUE/FALSE - Use a dark basemap? Default is FALSE.
+#' @param dark TRUE/FALSE - Use a dark theme? Default is FALSE.
 #'
-#' @param controls TRUE/FALSE - Let's the user switch basemaps. Default is FALSE.
+#' @param layers TRUE/FALSE - Add multiple basemap layers? Default is FALSE.
 #'
 #' @examples
 #' library(leaflet)

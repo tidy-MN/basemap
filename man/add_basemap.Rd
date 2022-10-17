@@ -2,17 +2,17 @@
 % Please edit documentation in R/add_basemap.R
 \name{add_basemap}
 \alias{add_basemap}
-\title{Add basemaps to leaflet maps that the user can switch On/Off}
+\title{Add basemaps to leaflet maps with light or dark theme}
 \usage{
 add_basemap(map, dark = FALSE, layers = FALSE)
 }
 \arguments{
-\item{dark}{TRUE/FALSE - Use a dark basemap? Default is FALSE.}
+\item{dark}{TRUE/FALSE - Use a dark theme? Default is FALSE.}
 
-\item{controls}{TRUE/FALSE - Let's the user switch basemaps. Default is FALSE.}
+\item{layers}{TRUE/FALSE - Add multiple basemap layers? Default is FALSE.}
 }
 \description{
-Add basemaps to leaflet maps that the user can switch On/Off
+Add basemaps to leaflet maps with light or dark theme
 }
 \examples{
 library(leaflet)
