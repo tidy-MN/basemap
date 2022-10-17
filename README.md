@@ -1,15 +1,15 @@
 # basemap
-:basecamp:🗺️ Add leaflet base maps the user can switch On / Off
+:basecamp:🗺️ Add quick leaflet basemaps
 
 ## Install
 
-To install `basemap` from github:
+To install `basemap` from Github:
 
 ``` r
 # First install the 'remotes' package
 library(remotes)
 
-# Install the development version from GitHub
+# Install the basemap package from GitHub
 remotes::install_github("MPCA-data/basemap")
 ```
 
