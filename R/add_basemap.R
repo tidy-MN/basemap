@@ -83,3 +83,6 @@ add_basemap <- function(map,
     }
     }
 }
+#' @rdname addBasemap
+#' @export
+addBasemap <- add_basemap
