@@ -31,7 +31,11 @@ Now you can use `%>% add_basemaps()` in your leaflet pipeline.
 
 ## Light-themed basemap
 ``` r
-leaflet(df) %>% add_basemap()
+leaflet(ozone_aqi) %>%
+   addCircleMarkers(fillColor = ~aqi_color, 
+                    color     = 'gray',
+                    fillOpacity = 0.8) %>% 
+   add_basemap()
 ```
 
 ![](light_map.png)
@@ -40,7 +44,11 @@ leaflet(df) %>% add_basemap()
 
 ## Dark-themed basemap
 ``` r
-leaflet(df) %>% add_basemap(dark = TRUE)
+leaflet(ozone_aqi) %>%
+   addCircleMarkers(fillColor = ~aqi_color, 
+                    color     = 'gray',
+                    fillOpacity = 0.8) %>%   
+   add_basemap(dark = TRUE)
 ```
 
 ![](dark_map.png)
@@ -49,7 +57,11 @@ leaflet(df) %>% add_basemap(dark = TRUE)
 
 ## Add multiple basemaps with layer controls
 ``` r
-leaflet(df) %>% add_basemaps(layers = TRUE)
+leaflet(ozone_aqi) %>%
+   addCircleMarkers(fillColor = ~aqi_color, 
+                    color     = 'gray',
+                    fillOpacity = 0.8) %>%
+   add_basemap(layers = TRUE)
 ```
 
 ![](layers_map.png)
