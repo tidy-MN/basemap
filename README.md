@@ -10,7 +10,7 @@ To install `basemap` from Github:
 library(remotes)
 
 # Install the basemap package from GitHub
-remotes::install_github("MPCA-data/basemap")
+remotes::install_github("tidy-MN/basemap")
 ```
 
 -----
